@@ -17,16 +17,6 @@ Frequencies:
 # pkg>
 
 activate .
-
-# julia>
-
-import OpenWeatherDecoder
-
-# Decode single file:
-OpenWeatherDecoder.makeplots("files/CubicSDR_20200906_225810_137620.wav","NOAA 15")
-
-# Decode all .wav files in files/ directory:
-include("decode.jl")
 ```
 
 ### Clone using Pkg
@@ -37,13 +27,22 @@ include("decode.jl")
 using Pkg
 
 Pkg.develop(PackageSpec(url="https://github.com/rctngle/OpenWeatherDecoder"))
+```
 
+### Decode a single file
+
+```julia
 import OpenWeatherDecoder
 
-# Decode single file:
 OpenWeatherDecoder.makeplots("files/CubicSDR_20200906_225810_137620.wav","NOAA 15")
+```
 
-# Decode all .wav files in files/ directory:
+### Decode all .wav files in the files directory
+
+If the files directory does not exist, create it and add some .wav files
+
+```julia
+import OpenWeatherDecoder
+
 include("decode.jl")
-
 ```

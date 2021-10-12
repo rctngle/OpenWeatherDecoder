@@ -23,7 +23,7 @@ activate .
 import OpenWeatherDecoder
 
 # Decode single file:
-OpenWeatherDecoder.makeplots("files/row45_20210328_102800_137912500.wav","NOAA 18")
+OpenWeatherDecoder.makeplots("files/CubicSDR_20200906_225810_137620.wav","NOAA 15")
 
 # Decode all .wav files in files/ directory:
 include("decode.jl")
@@ -41,7 +41,7 @@ Pkg.develop(PackageSpec(url="https://github.com/rctngle/OpenWeatherDecoder"))
 import OpenWeatherDecoder
 
 # Decode single file:
-OpenWeatherDecoder.makeplots("files/row45_20210328_102800_137912500.wav","NOAA 18")
+OpenWeatherDecoder.makeplots("files/CubicSDR_20200906_225810_137620.wav","NOAA 15")
 
 # Decode all .wav files in files/ directory:
 include("decode.jl")

@@ -11,9 +11,9 @@ Frequencies:
 
 ### Clone using Git
 
-enter ] at julia> prompt to enter pkg>
-
 ```julia
+# enter ] at julia> prompt to enter pkg>
+
 # pkg>
 
 activate .

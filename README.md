@@ -12,10 +12,13 @@ Frequencies:
 enter ] at julia> prompt to enter pkg>
 
 pkg> activate .
+
 `julia> import OpenWeatherDecoder`
 
 Decode single file:
+
 `julia> OpenWeatherDecoder.makeplots("files/row45_20210328_102800_137912500.wav","NOAA 18")`
 
 Decode all in files directory:
+
 `julia> include("decode.jl")`

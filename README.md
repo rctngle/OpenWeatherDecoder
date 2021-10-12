@@ -56,6 +56,12 @@ exit()
 # Start julia
 $ julia
 
+# Enter pkg>
+
+activate .
+
+# Back to julia>
+
 import OpenWeatherDecoder
 OpenWeatherDecoder.makeplots("files/CubicSDR_20200906_225810_137620.wav","NOAA 15")
 

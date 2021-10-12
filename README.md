@@ -9,7 +9,7 @@ Frequencies:
 - NOAA 18 = 137912500
 - NOAA 15 = 137620000
 
-## Clone repository and run script
+### Clone using Git
 
 enter ] at julia> prompt to enter pkg>
 
@@ -29,7 +29,7 @@ OpenWeatherDecoder.makeplots("files/row45_20210328_102800_137912500.wav","NOAA 1
 include("decode.jl")
 ```
 
-## Clone using Pkg.develop
+### Clone using Pkg.develop
 
 ```julia
 # julia>

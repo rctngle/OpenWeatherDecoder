@@ -15,6 +15,7 @@ enter ] at julia> prompt to enter pkg>
 
 ```julia
 #pkg>
+
 activate .
 
 # create files directory and add .wav files

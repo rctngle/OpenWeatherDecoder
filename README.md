@@ -29,7 +29,7 @@ OpenWeatherDecoder.makeplots("files/row45_20210328_102800_137912500.wav","NOAA 1
 include("decode.jl")
 ```
 
-### Clone using Pkg.develop
+### Clone using Pkg
 
 ```julia
 # julia>

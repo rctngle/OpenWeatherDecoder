@@ -46,3 +46,18 @@ import OpenWeatherDecoder
 
 include("decode.jl")
 ```
+
+### To edit the src
+
+```julia
+# Exit Julia
+exit()
+
+# Start julia
+julia
+
+import OpenWeatherDecoder
+OpenWeatherDecoder.makeplots("files/CubicSDR_20200906_225810_137620.wav","NOAA 15")
+
+include("decode.jl")
+```

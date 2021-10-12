@@ -11,9 +11,10 @@ Frequencies:
 
 enter ] at julia> prompt to enter pkg>
 
+```
 pkg> activate .
-
-`julia> import OpenWeatherDecoder`
+julia> import OpenWeatherDecoder
+```
 
 Decode single file:
 

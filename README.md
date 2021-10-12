@@ -54,7 +54,7 @@ include("decode.jl")
 exit()
 
 # Start julia
-julia
+$ julia
 
 import OpenWeatherDecoder
 OpenWeatherDecoder.makeplots("files/CubicSDR_20200906_225810_137620.wav","NOAA 15")

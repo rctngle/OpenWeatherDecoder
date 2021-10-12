@@ -22,7 +22,7 @@ activate .
 
 #julia>
 
-import APTDecoder
+import OpenWeatherDecoder
 
 # Decode single file:
 OpenWeatherDecoder.makeplots("files/row45_20210328_102800_137912500.wav","NOAA 18")
@@ -42,7 +42,7 @@ Pkg.develop(PackageSpec(url="https://github.com/rctngle/OpenWeatherDecoder"))
 
 # create files directory and add .wav files
 
-import APTDecoder
+import OpenWeatherDecoder
 
 # Decode single file:
 OpenWeatherDecoder.makeplots("files/row45_20210328_102800_137912500.wav","NOAA 18")

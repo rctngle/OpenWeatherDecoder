@@ -27,7 +27,7 @@ import APTDecoder
 # Decode single file:
 OpenWeatherDecoder.makeplots("files/row45_20210328_102800_137912500.wav","NOAA 18")
 
-Decode all files:
+#Decode all files:
 include("decode.jl")
 ```
 
@@ -47,7 +47,7 @@ import APTDecoder
 # Decode single file:
 OpenWeatherDecoder.makeplots("files/row45_20210328_102800_137912500.wav","NOAA 18")
 
-Decode all files:
+#Decode all files:
 include("decode.jl")
 
 ```

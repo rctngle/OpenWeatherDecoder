@@ -9,16 +9,6 @@ Frequencies:
 - NOAA 18 = 137912500
 - NOAA 15 = 137620000
 
-### Clone using Git
-
-```julia
-# enter ] at julia> prompt to enter pkg>
-
-# pkg>
-
-activate .
-```
-
 ### Clone using Pkg
 
 ```julia
@@ -27,6 +17,16 @@ activate .
 using Pkg
 
 Pkg.develop(PackageSpec(url="https://github.com/rctngle/OpenWeatherDecoder"))
+```
+
+### Or download/clone with git and activate the package
+
+```julia
+# enter ] at julia> prompt to enter pkg>
+
+# pkg>
+
+activate .
 ```
 
 ### Decode a single file

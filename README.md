@@ -14,11 +14,11 @@ Frequencies:
 enter ] at julia> prompt to enter pkg>
 
 ```julia
-#pkg>
+# pkg>
 
 activate .
 
-#julia>
+# julia>
 
 import OpenWeatherDecoder
 
@@ -32,7 +32,7 @@ include("decode.jl")
 ## Clone using Pkg.develop
 
 ```julia
-#julia>
+# julia>
 
 using Pkg
 

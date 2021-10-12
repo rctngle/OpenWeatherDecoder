@@ -17,8 +17,9 @@ enter ] at julia> prompt to enter pkg>
 #pkg>
 activate .
 
+# create files directory and add .wav files
+
 #julia>
-# create files directory and add .wav fiels
 
 import APTDecoder
 
@@ -32,11 +33,13 @@ include("decode.jl")
 ## Clone using Pkg.develop
 
 ```julia
+#julia>
+
 using Pkg
 
 Pkg.develop(PackageSpec(url="https://github.com/rctngle/OpenWeatherDecoder"))
 
-# create files directory and add .wav fiels
+# create files directory and add .wav files
 
 import APTDecoder
 

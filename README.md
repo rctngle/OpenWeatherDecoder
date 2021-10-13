@@ -44,7 +44,7 @@ If the files directory does not exist, create it and add some .wav files
 ```julia
 import OpenWeatherDecoder
 
-include("decode.jl")
+OpenWeatherDecoder.plotall()
 ```
 
 ### To edit the src
@@ -63,7 +63,8 @@ activate .
 # Back to julia>
 
 import OpenWeatherDecoder
+
 OpenWeatherDecoder.makeplots("files/CubicSDR_20200906_225810_137620.wav","NOAA 15")
 
-include("decode.jl")
+OpenWeatherDecoder.plotall()
 ```

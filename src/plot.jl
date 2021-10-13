@@ -1,7 +1,8 @@
 function plot(plon,plat,data; cmap = "RdYlBu_r", coastlinecolor="red")
     pcolormesh(plon,plat,data,cmap=cmap)
     lon,lat,lsmask = GeoDatasets.landseamask(;resolution='l',grid=5)
-    contour(lon,lat,lsmask',[0.5],linewidths=[1.],colors=coastlinecolor);
+    #gca().set_aspect(1)
+    contour(lon,lat,lsmask',[0.5],linewidths=[0.05],colors=coastlinecolor);
     # xlim(extrema(plon))
     # ylim(extrema(plat))
     return nothing
@@ -23,10 +24,81 @@ the name of the satellite (generally `"NOAA 15"`, `"NOAA 18"`, `"NOAA 19"`).
 import OpenWeatherDecoder
 
 wavname = "gqrx_20190825_182745_137620000.wav"
-OpenWeatherDecoder.makeplots(wavname,"NOAA 15")
+OpenWeatherDecoder.makeplots(wavname,"NOAA 15", coastlinecolor = "red", cmap=)
 ```
 
 """
+
+# function plotall(dirname;
+#    starttime = nothing,
+#    eop = nothing,
+#    qrange = (0.01,0.99),
+#    coastlinecolor = "red",
+#    cmap = "RdYlBu_r",
+#    tles = get_tle(:weather),
+#    dpi = 150)
+
+#     NOAAFreqs = Dict(
+#         "1371" => "NOAA 19",
+#         "1379" => "NOAA 18",
+#         "1376" => "NOAA 15"
+#     )
+
+#     foreach(glob("*.wav","files")) do f
+#         wavmatch = match(r".*/(.*.wav)", f)
+#         freqmatch = match(r".*_.*_(.*).wav", f)
+
+#         wavname = wavmatch[1]
+#         prefix = replace(wavname,r".wav$" => "")
+#         freq = freqmatch[1]
+
+#         subfreq = SubString(freq, 1, 4)
+#         noaa = get(NOAAFreqs, subfreq, 0)
+        
+#         OpenWeatherDecoder.makeplots(wavname, noaa, starttime, eop, prefix, qrange, coastlinecolor, cmap, tles, dpi)
+#     end
+
+# end
+
+
+
+
+function plotall(;
+                   starttime = nothing,
+                   eop = nothing,
+                   qrange = (0.01,0.99),
+                   coastlinecolor = "red",
+                   cmap = "RdYlBu_r",
+                   tles = get_tle(:weather),
+                   dpi = 150)
+    
+    NOAAFreqs = Dict(
+        "1371" => "NOAA 19",
+        "1379" => "NOAA 18",
+        "1376" => "NOAA 15"
+    )
+
+    foreach(glob("*.wav","files")) do f
+        freqmatch = match(r".*_.*_(.*).wav", f)
+        prefix = replace(f,r".wav$" => "")
+        freq = freqmatch[1]
+
+        subfreq = SubString(freq, 1, 4)
+        satellite_name = get(NOAAFreqs, subfreq, 0)
+
+        OpenWeatherDecoder.makeplots(f, satellite_name, 
+            starttime=starttime,
+            eop=eop,
+            prefix=prefix,
+            qrange=qrange,
+            coastlinecolor=coastlinecolor,
+            cmap=cmap,
+            tles=tles,
+            dpi=dpi)
+    end
+
+end
+
 function makeplots(wavname,satellite_name;
                    starttime = nothing,
                    eop = nothing,
@@ -59,20 +131,20 @@ function makeplots(wavname,satellite_name;
     grid_color = [0,0.7,0.6]
 
     fig = figure()
-    plt.style.use("dark_background")
+    #plt.style.use("dark_background")
     Alon,Alat,Adata = OpenWeatherDecoder.georeference(
         channelA,satellite_name,datatime,starttime, eop = eop, tles = tles)
     OpenWeatherDecoder.plot(Alon,Alat,Adata; coastlinecolor=coastlinecolor, cmap=cmap)
-    plt.grid(linestyle = "--",color=grid_color)
-    savefig(imagenames.channel_a,dpi=dpi,pad_inches=0, bbox_inches="tight", transparent=false)
+    #plt.grid(linestyle = "--",color=grid_color)
+    savefig(imagenames.channel_a,dpi=dpi,pad_inches=0, bbox_inches="tight", transparent=true)
     fig.clf()
 
-    Blon,Blat,Bdata = OpenWeatherDecoder.georeference(
-        channelB,satellite_name,datatime,starttime, eop = eop, tles = tles)
-    OpenWeatherDecoder.plot(Blon,Blat,Bdata; coastlinecolor=coastlinecolor, cmap=cmap)
-    plt.grid(linestyle = "--",color=grid_color)
-    savefig(imagenames.channel_b,dpi=dpi,pad_inches=0, bbox_inches="tight", transparent=false)
-    close(fig)
+    # Blon,Blat,Bdata = OpenWeatherDecoder.georeference(
+    #     channelB,satellite_name,datatime,starttime, eop = eop, tles = tles)
+    # OpenWeatherDecoder.plot(Blon,Blat,Bdata; coastlinecolor=coastlinecolor, cmap=cmap)
+    # plt.grid(linestyle = "--",color=grid_color)
+    # savefig(imagenames.channel_b,dpi=dpi,pad_inches=0, bbox_inches="tight", transparent=false)
+    # close(fig)
 
     return imagenames
 end

@@ -35,7 +35,7 @@ function get_tle(satellite_type)
     # get satellite orbit information (TLE)
 
     @RemoteFile(tle_data,
-                "https://www.celestrak.com/NORAD/elements/weather.txt",
+               "https://www.celestrak.com/NORAD/elements/weather.txt",
                 updates=:daily)
     download(tle_data)
 
@@ -78,13 +78,14 @@ function georeference(pngname,satellite_name,channel;
         starttime = starttimename(pngname)
     end
 
-    data_all = convert(Array{Float32,2},imread(pngname)) :: Array{Float32,2}
+    data_all = convert(Array{Float32,2},imread("files/"*pngname)) :: Array{Float32,2}
 
     data =
-        if channel == 'a'
+        if channel == 'b'
             data_all[:,83:990];
         else
-            data_all[:,1123:2027];
+            #data_all[:,1123:2027];
+            data_all[:,1115:1995];
         end
 
     data = data[end:-1:1,end:-1:1]

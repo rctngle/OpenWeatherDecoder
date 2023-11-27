@@ -1,15 +1,35 @@
 
-function plot(plon,plat,data; cmap = "bone", coastlinecolor="red")
-	ccrs = pyimport("cartopy.crs")
-	ax = subplot(projection=ccrs.EqualEarth())
-	#ax = subplot(projection=ccrs.Orthographic(-10, 45))
-	ax.outline_patch.set_linewidth(0.1)
-	#ax.set_extent([-180, 180, -90, 90])
-	ax.set_global()
-	pcolormesh(plon,plat,data,cmap=cmap,shading="auto",transform=ccrs.PlateCarree())
-	#ax.coastlines(resolution="50m",linewidth=0.1)
-	return nothing
+# function plot(plon,plat,data; cmap = "bone", coastlinecolor="red")
+# 	ccrs = pyimport("cartopy.crs")
+# 	ax = subplot(projection=ccrs.EqualEarth())
+# 	#ax = subplot(projection=ccrs.Orthographic(-10, 45))
+# 	ax.outline_patch.set_linewidth(0.1)
+# 	#ax.set_extent([-180, 180, -90, 90])
+# 	ax.set_global()
+# 	pcolormesh(plon,plat,data,cmap=cmap,shading="auto",transform=ccrs.PlateCarree())
+# 	#ax.coastlines(resolution="50m",linewidth=0.1)
+# 	return nothing
+# end
+
+function plot(plon, plat, data; cmap = "bone", coastlinecolor = "red")
+    ccrs = pyimport("cartopy.crs")
+    ax = subplot(projection = ccrs.EqualEarth())
+    
+    # Check if the outline_patch attribute exists and set the line width if it does
+    if hasproperty(ax, :outline_patch)
+        ax.outline_patch.set_linewidth(0.1)
+    else
+        # For newer versions of Cartopy, use this approach to set the outline
+        ax.spines["geo"].set_linewidth(0.1)
+    end
+
+    # Other settings
+    ax.set_global()
+    pcolormesh(plon, plat, data, cmap = cmap, shading = "auto", transform = ccrs.PlateCarree())
+
+    return nothing
 end
+
 
 """
 	makeplots(wavname,satellite_name)

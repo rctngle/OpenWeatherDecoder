@@ -29,7 +29,7 @@ WAV = "8149f6b0-98f6-5db9-b78f-408fbbb8ef88"
 [compat]
 CodecZlib = "0.6, 0.7"
 DSP = "0.6, 0.7"
-FileIO = "1"
+FileIO = "1.11.1"
 GeoDatasets = "0.1"
 ImageMagick = "0.7, 1"
 ImageCore = "0.8.22"

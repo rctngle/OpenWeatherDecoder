@@ -44,6 +44,8 @@ If the files directory does not exist, create it and add some .wav files
 ```julia
 import OpenWeatherDecoder
 
+using Revise
+
 OpenWeatherDecoder.plotall()
 ```
 

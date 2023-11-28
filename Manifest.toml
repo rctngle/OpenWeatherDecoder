@@ -2,7 +2,7 @@
 
 julia_version = "1.9.4"
 manifest_format = "2.0"
-project_hash = "738a6ebe8b9db890c45933a6598c3485b0717862"
+project_hash = "fe9ac5b77da5bfde481938a3fc919f5212203696"
 
 [[deps.AbstractFFTs]]
 deps = ["LinearAlgebra"]
@@ -681,9 +681,9 @@ version = "1.0.0"
 
 [[deps.Polynomials]]
 deps = ["LinearAlgebra", "RecipesBase", "Setfield", "SparseArrays"]
-git-tree-sha1 = "5a95b69396b77fdb2c48970a535610c4743810e2"
+git-tree-sha1 = "a9c7a523d5ed375be3983db190f6a5874ae9286d"
 uuid = "f27b6e38-b328-58d1-80ce-0feddd5e7a45"
-version = "4.0.5"
+version = "4.0.6"
 
     [deps.Polynomials.extensions]
     PolynomialsChainRulesCoreExt = "ChainRulesCore"

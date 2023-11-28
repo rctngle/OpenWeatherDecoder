@@ -93,7 +93,22 @@ function georeference(pngname,satellite_name,channel;
         starttime = starttimename(pngname)
     end
 
-    data_all = convert(Array{Float32,2},imread("files/"*pngname)) :: Array{Float32,2}
+    
+
+# Load the image
+img = imread("files/"*pngname)
+
+# Convert the image to grayscale
+img_gray = Gray.(img)
+
+# Convert the grayscale image to a 2D array
+data_all = convert(Array{Float32,2}, channelview(img_gray))
+    printf("asd")
+# Now you can safely index data_all with your desired indices
+# Make sure your indices are within the bounds of the image dimensions
+data = data_all[:, 83:990]  # Adjust these indices as per your requirements
+
+    #data_all = convert(Array{Float32,2},imread("files/"*pngname)) :: Array{Float32,2}
 
     data =
         if channel == 'b'

@@ -1,22 +1,22 @@
 conda create -n myenv python=3.7
 
-/Users/malk/.julia/conda/3/bin/conda create -n myenv python=3.7
+/Users/danielpowers/.julia/conda/3/bin/conda create -n myenv python=3.7
 
-/Users/malk/.julia/conda/3/bin/conda activate myenv
+/Users/danielpowers/.julia/conda/3/bin/conda activate myenv
 
-/Users/malk/.julia/conda/3/bin/conda activate myenv
+/Users/danielpowers/.julia/conda/3/bin/conda activate myenv
 
 #### >>>
-/Users/malk/.julia/conda/3/bin/conda install python=3.7
+/Users/danielpowers/.julia/conda/3/bin/conda install python=3.7
 
-/Users/malk/.julia/conda/3/bin/conda install -y basemap
-/Users/malk/.julia/conda/3/bin/conda install -y matplotlib
-/Users/malk/.julia/conda/3/bin/conda install matplotlib=3.2
-/Users/malk/.julia/conda/3/bin/conda update --all
+/Users/danielpowers/.julia/conda/3/bin/conda install -y basemap
+/Users/danielpowers/.julia/conda/3/bin/conda install -y matplotlib
+/Users/danielpowers/.julia/conda/3/bin/conda install matplotlib=3.2
+/Users/danielpowers/.julia/conda/3/bin/conda update --all
 
 
 
-/Users/malk/.julia/conda/3/bin/conda install -c conda-forge matplotlib basemap
+/Users/danielpowers/.julia/conda/3/bin/conda install -c conda-forge matplotlib basemap
 
 Pkg.build("PyCall")
 
@@ -35,7 +35,7 @@ Pkg.build("PyCall")
 using PyPlot
 
 
-/Users/malk/.julia/conda/3/bin/conda install cartopy
+/Users/danielpowers/.julia/conda/3/bin/conda install cartopy
 
 
 
@@ -46,3 +46,18 @@ OpenWeatherDecoder.decodewav("files/CubicSDR_20211028_083049_137913.wav","NOAA 1
 
 CubicSDR_20211031_002500_137100
 CubicSDR_20211030_223508_137100
+
+
+
+
+
+
+
+ENV["PYTHON"]=""
+Pkg.update()
+Pkg.build("PyCall")
+using PyCall
+PyCall.python
+
+/Users/danielpowers/.julia/conda/3/bin/conda install cartopy
+/Users/danielpowers/.julia/conda/3/bin/conda instal cartopy

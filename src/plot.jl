@@ -2,8 +2,6 @@ using PyCall
 
 function plot(plon, plat, data; cmap = "bone", coastlinecolor = "red")
     ccrs = PyCall.pyimport("cartopy.crs")
-
-    println(ccrs)
     ax = subplot(projection = ccrs.EqualEarth())
     
     # Check if the outline_patch attribute exists and set the line width if it does

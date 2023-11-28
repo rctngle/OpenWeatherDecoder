@@ -30,16 +30,30 @@ end
 
 Load the two-line elements (TLEs) data from https://www.celestrak.com for weather satellites.
 """
+# function get_tle(satellite_type)
+#     @assert satellite_type == :weather
+#     # get satellite orbit information (TLE)
+
+#     @RemoteFile(tle_data,
+#                "https://www.celestrak.com/NORAD/elements/weather.txt",
+#                 updates=:daily)
+#     download(tle_data)
+
+
+#     tles = read_tle(path(tle_data))
+# end
+
 function get_tle(satellite_type)
     @assert satellite_type == :weather
-    # get satellite orbit information (TLE)
+    # Use static satellite orbit information (TLE) from a file
 
-    @RemoteFile(tle_data,
-                "https://www.celestrak.com/NORAD/elements/weather.txt",
-                updates=:daily)
-    download(tle_data)
+    # Specify the path to your static TLE data file
+    static_tle_file = "data/weather.txt"
 
-    tles = read_tle(path(tle_data))
+    # Read TLEs from the static file
+    tles = read_tle(static_tle_file)
+
+    return tles
 end
 
 
@@ -66,6 +80,7 @@ channel = 'a'
 APTDecoder.georeference(pngname,satellite_name,channel)
 ```
 """
+
 function georeference(pngname,satellite_name,channel;
                       starttime = DateTime(1,1,1,0,0,0),
                       tles = get_tle(:weather))
@@ -78,13 +93,29 @@ function georeference(pngname,satellite_name,channel;
         starttime = starttimename(pngname)
     end
 
-    data_all = convert(Array{Float32,2},imread(pngname)) :: Array{Float32,2}
+    
+
+# Load the image
+img = imread("files/"*pngname)
+
+# Convert the image to grayscale
+img_gray = Gray.(img)
+
+# Convert the grayscale image to a 2D array
+data_all = convert(Array{Float32,2}, channelview(img_gray))
+    printf("asd")
+# Now you can safely index data_all with your desired indices
+# Make sure your indices are within the bounds of the image dimensions
+data = data_all[:, 83:990]  # Adjust these indices as per your requirements
+
+    #data_all = convert(Array{Float32,2},imread("files/"*pngname)) :: Array{Float32,2}
 
     data =
-        if channel == 'a'
+        if channel == 'b'
             data_all[:,83:990];
         else
-            data_all[:,1123:2027];
+            #data_all[:,1123:2027];
+            data_all[:,1115:1995];
         end
 
     data = data[end:-1:1,end:-1:1]
@@ -93,6 +124,60 @@ function georeference(pngname,satellite_name,channel;
     plon,plat,data = georeference(data,satellite_name,datatime,starttime, tles = tles)
     return plon,plat,data
 end
+
+# function georeference(pngname, satellite_name, channel;
+#                       starttime = DateTime(1,1,1,0,0,0),
+#                       tles = get_tle(:weather))
+
+#     if !(channel in ['a','b'])
+#         error("channel must be 'a' or 'b'")
+#     end
+
+#     if starttime == DateTime(1,1,1,0,0,0)
+#         starttime = starttimename(pngname)
+#     end
+
+#     data_all = imread("files/"*pngname)
+
+#     # Convert the 3D array to a 2D array of RGBA values
+#     data_all = permutedims(data_all, [3, 1, 2])
+#     data_all = reinterpret(RGBA{Float32}, reshape(data_all, :, size(data_all, 2)))
+
+#     # Convert RGBA to RGB if alpha channel is not needed
+#     data_all_rgb = map(c -> RGB(c.r, c.g, c.b), data_all)
+
+#     # Convert to grayscale
+#     data_all_gray = Gray.(data_all_rgb)
+
+#     # Convert to Float32
+#     data_all_gray = Float32.(data_all_gray)
+
+#     # Transpose the matrix for correct dimensions
+#     data_all_gray = transpose(data_all_gray)
+
+#     # Set the slicing indices within the bounds of the matrix
+#     # Ensure they are within the dimensions 821x2080
+#     row_start, row_end = max(1, 83), min(821, 990)
+#     col_start, col_end = max(1, 1115), min(2080, 1995)
+
+#     # Perform the slicing operation
+#     if channel == 'b'
+#         data = data_all_gray[row_start:row_end, col_start:col_end]
+#     else  # For channel 'a'
+#         # Adjust the slicing for channel 'a' if needed
+#         # Make sure to swap row and column slicing based on channel requirement
+#         # Add your logic here if different from channel 'b'
+#         data = data_all_gray[row_start:row_end, col_start:col_end]
+#     end      
+
+#     data = data[end:-1:1,end:-1:1]
+#     datatime = (0:size(data,1)-1)/scans_per_seconds
+
+#     plon,plat,data = georeference(data, satellite_name, datatime, starttime, tles = tles)
+#     return plon,plat,data
+# end
+
+
 
 
 """

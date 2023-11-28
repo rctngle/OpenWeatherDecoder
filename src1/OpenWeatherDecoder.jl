@@ -12,11 +12,16 @@ using Statistics
 using LinearAlgebra
 using SatelliteToolbox
 using PyPlot
+using PyCall
 using CodecZlib
 using RemoteFiles
 import DSP
 using FileIO
 using GeoDatasets
+using Glob
+using Conda
+using ImageContrastAdjustment 
+using ImageCore
 
 scans_per_seconds = 2
 

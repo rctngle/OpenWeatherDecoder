@@ -1,9 +1,23 @@
-function plot(plon,plat,data; cmap = "RdYlBu_r", coastlinecolor="magenta")
-    pcolormesh(plon,plat,data,cmap=cmap)
-    lon,lat,lsmask = GeoDatasets.landseamask(;resolution='l',grid=5)
-    contour(lon,lat,lsmask',[0.5],linewidths=[1.],colors=coastlinecolor);
-    xlim(extrema(plon))
-    ylim(extrema(plat))
+using PyCall
+
+function plot(plon, plat, data; cmap = "bone", coastlinecolor = "red")
+    ccrs = PyCall.pyimport("cartopy.crs")
+
+    println(ccrs)
+    ax = subplot(projection = ccrs.EqualEarth())
+    
+    # Check if the outline_patch attribute exists and set the line width if it does
+    if hasproperty(ax, :outline_patch)
+        ax.outline_patch.set_linewidth(0.1)
+    else
+        # For newer versions of Cartopy, use this approach to set the outline
+        ax.spines["geo"].set_linewidth(0.1)
+    end
+
+    # Other settings
+    ax.set_global()
+    pcolormesh(plon, plat, data, cmap = cmap, shading = "auto", transform = ccrs.PlateCarree())
+
     return nothing
 end
 
@@ -32,10 +46,10 @@ function makeplots(wavname,satellite_name;
                    eop = nothing,
                    prefix = replace(wavname,r".wav$" => ""),
                    qrange = (0.01,0.99),
-                   coastlinecolor = "magenta",
-                   cmap = "RdYlBu_r",
+                   coastlinecolor = "red",
+                   cmap = "bone",
                    tles = get_tle(:weather),
-                   dpi = 150)
+                   dpi = 2200)
 
     if starttime == nothing
         starttime = OpenWeatherDecoder.starttimename(basename(wavname))
@@ -56,22 +70,18 @@ function makeplots(wavname,satellite_name;
         channel_b = prefix * "_channel_b.png")
 
     FileIO.save(imagenames.rawname, colorview(Gray, data[:,1:3:end]./maximum(data)))
-    grid_color = [0,0.7,0.6]
-
+    
     fig = figure()
-    plt.style.use("dark_background")
-    Alon,Alat,Adata = OpenWeatherDecoder.georeference(
-        channelA,satellite_name,datatime,starttime, eop = eop, tles = tles)
+    
+    Alon,Alat,Adata = OpenWeatherDecoder.georeference(channelA,satellite_name,datatime,starttime, eop = eop, tles = tles)
+
     OpenWeatherDecoder.plot(Alon,Alat,Adata; coastlinecolor=coastlinecolor, cmap=cmap)
-    plt.grid(linestyle = "--",color=grid_color)
-    savefig(imagenames.channel_a,dpi=dpi,pad_inches=0, bbox_inches="tight", transparent=false)
+    savefig(imagenames.channel_a,dpi=dpi,pad_inches=0, bbox_inches="tight", transparent=true)
     fig.clf()
 
-    Blon,Blat,Bdata = OpenWeatherDecoder.georeference(
-        channelB,satellite_name,datatime,starttime, eop = eop, tles = tles)
+    Blon,Blat,Bdata = OpenWeatherDecoder.georeference(channelB,satellite_name,datatime,starttime, eop = eop, tles = tles)
     OpenWeatherDecoder.plot(Blon,Blat,Bdata; coastlinecolor=coastlinecolor, cmap=cmap)
-    plt.grid(linestyle = "--",color=grid_color)
-    savefig(imagenames.channel_b,dpi=dpi,pad_inches=0, bbox_inches="tight", transparent=false)
+    savefig(imagenames.channel_b,dpi=dpi,pad_inches=0, bbox_inches="tight", transparent=true)
     close(fig)
 
     return imagenames
